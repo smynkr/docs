@@ -44,6 +44,14 @@
               "ai-tools/claude-code",
               "ai-tools/windsurf"
             ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/overview",
+              "integrations/google-workspace",
+              "integrations/microsoft-entra-id"
+            ]
           }
         ]
       },

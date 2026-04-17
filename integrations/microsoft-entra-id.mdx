@@ -1,0 +1,92 @@
+---
+title: Microsoft Entra ID
+description: Connect Microsoft Entra ID (Azure AD) to sync users, groups, and directory data into Axiom Layer with one-click OAuth.
+---
+
+The Microsoft Entra ID integration uses OAuth to connect your Microsoft 365 directory to Axiom Layer. A Global Admin signs in once, grants read-only consent, and Axiom Layer syncs your users, groups, directory data, and audit logs automatically. No Azure AD app registration required on your side.
+
+## Prerequisites
+
+- A Microsoft 365 work or school account with **Global Admin** role.
+- Access to the Axiom Layer **Integrations** page (requires admin role in your organization).
+
+## What gets synced
+
+| Data | Description |
+| --- | --- |
+| Users | Entra ID users including email, display name, account status, and assigned licenses |
+| Groups | Security groups and Microsoft 365 groups with memberships |
+| Directory data | Organizational structure and directory metadata |
+| Audit logs | Sign-in activity, directory changes, and conditional access events |
+
+All data is read-only. Axiom Layer never modifies your Microsoft Entra ID configuration.
+
+## Connect Microsoft Entra ID
+
+<Steps>
+  <Step title="Open integrations">
+    Go to **Integrations** in the Axiom Layer sidebar.
+  </Step>
+  <Step title="Find Microsoft Entra ID">
+    Locate the **Microsoft Entra ID** card under **User management and IAM** and click **Connect**.
+  </Step>
+  <Step title="Sign in and grant consent">
+    Click **Sign in with Microsoft** in the dialog. You are redirected to the Microsoft identity platform consent screen.
+
+    Grant the requested permissions:
+    - Read all users' full profiles
+    - Read all groups
+    - Read directory data
+    - Read all audit log data
+
+    <Note>
+      You must sign in with an account that has the **Global Admin** role. Other admin roles cannot grant the required organization-wide read permissions.
+    </Note>
+  </Step>
+  <Step title="Confirm connection">
+    After granting consent, you are redirected back to Axiom Layer. A confirmation banner appears and the first sync starts automatically.
+
+    Refresh the page in a few minutes to see your synced data.
+  </Step>
+</Steps>
+
+## Permissions requested
+
+Axiom Layer requests the following Microsoft Graph permissions:
+
+| Permission | Purpose |
+| --- | --- |
+| `User.Read.All` | Read all user profiles and account status |
+| `Group.Read.All` | Read all security and Microsoft 365 groups |
+| `Directory.Read.All` | Read directory data and organizational structure |
+| `AuditLog.Read.All` | Read sign-in and audit log activity |
+| `offline_access` | Maintain access via refresh token for ongoing syncs |
+
+These are all read-only permissions. Axiom Layer cannot create, modify, or delete users, groups, or settings in your Microsoft Entra ID tenant.
+
+## Migrating from manual credentials
+
+If you previously connected Microsoft Entra ID using a client ID and client secret, you can switch to the OAuth flow:
+
+1. Disconnect the existing connection from the **Integrations** page.
+2. Reconnect using the OAuth flow described above.
+3. Your existing synced data is preserved. The next sync uses the new OAuth-based connection.
+
+The OAuth flow is simpler because it doesn't require you to create or manage an Azure AD app registration.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Connection fails with 'no access token'">
+    Make sure you granted all requested permissions on the Microsoft consent screen. If you skipped or denied a permission, disconnect and reconnect to try again.
+  </Accordion>
+  <Accordion title="No data appears after connecting">
+    The first sync can take a few minutes depending on directory size. If no data appears after 10 minutes, check the connection status on the **Integrations** page. If the status shows **Failing**, disconnect and reconnect.
+  </Accordion>
+  <Accordion title="'Requires Global Admin' error">
+    The account you signed in with doesn't have the Global Admin role in Microsoft Entra ID. Ask your Microsoft 365 administrator to either assign you the Global Admin role or connect the integration themselves.
+  </Accordion>
+  <Accordion title="Conditional access policies block sign-in">
+    If your organization has conditional access policies that restrict sign-in from unrecognized applications, your administrator may need to add an exception for the Axiom Layer authentication service. Contact your IT team for assistance.
+  </Accordion>
+</AccordionGroup>

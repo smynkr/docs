@@ -1,0 +1,76 @@
+---
+title: Google Workspace
+description: Connect Google Workspace to sync users, groups, and admin audit logs into Axiom Layer with one-click OAuth.
+---
+
+The Google Workspace integration uses OAuth to connect your directory to Axiom Layer. A super-admin signs in once, grants read-only consent, and Axiom Layer syncs your users, groups, and audit logs automatically. No GCP project or service account setup required.
+
+## Prerequisites
+
+- A Google Workspace account with **super-admin** privileges.
+- Access to the Axiom Layer **Integrations** page (requires admin role in your organization).
+
+## What gets synced
+
+| Data | Description |
+| --- | --- |
+| Users | Directory users including email, name, status, and 2FA enrollment |
+| Groups | Google Workspace groups and their memberships |
+| Admin audit logs | Sign-in events, admin actions, and security-related activity |
+| Drive sharing | External sharing and permissions data |
+
+All data is read-only. Axiom Layer never modifies your Google Workspace configuration.
+
+## Connect Google Workspace
+
+<Steps>
+  <Step title="Open integrations">
+    Go to **Integrations** in the Axiom Layer sidebar.
+  </Step>
+  <Step title="Find Google Workspace">
+    Locate the **Google Workspace** card under **User management and IAM** and click **Connect**.
+  </Step>
+  <Step title="Sign in and grant consent">
+    Click **Sign in with Google Workspace** in the dialog. You are redirected to Google's consent screen.
+
+    Grant the requested permissions:
+    - Read-only access to directory users
+    - Read-only access to directory groups
+    - Read-only access to admin audit reports
+
+    <Note>
+      You must sign in with a super-admin account. Non-admin accounts cannot grant the required directory permissions.
+    </Note>
+  </Step>
+  <Step title="Confirm connection">
+    After granting consent, you are redirected back to Axiom Layer. A confirmation banner appears and the first sync starts automatically.
+
+    Refresh the page in a few minutes to see your synced data.
+  </Step>
+</Steps>
+
+## Permissions requested
+
+Axiom Layer requests the following Google OAuth scopes:
+
+| Scope | Purpose |
+| --- | --- |
+| `admin.directory.user.readonly` | Read user profiles and account status |
+| `admin.directory.group.readonly` | Read groups and group memberships |
+| `admin.reports.audit.readonly` | Read admin audit and sign-in activity logs |
+
+These are all read-only scopes. Axiom Layer cannot create, modify, or delete users, groups, or settings in your Google Workspace.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Connection fails with 'no access token'">
+    Make sure you granted all requested permissions on the Google consent screen. If you skipped or denied a permission, disconnect and reconnect to try again.
+  </Accordion>
+  <Accordion title="No data appears after connecting">
+    The first sync can take a few minutes depending on directory size. If no data appears after 10 minutes, check the connection status on the **Integrations** page. If the status shows **Failing**, disconnect and reconnect.
+  </Accordion>
+  <Accordion title="'Requires super-admin' error">
+    The account you signed in with doesn't have super-admin privileges in Google Workspace. Ask your Google Workspace administrator to either grant you super-admin access or connect the integration themselves.
+  </Accordion>
+</AccordionGroup>
