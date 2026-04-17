@@ -1,0 +1,115 @@
+---
+title: Integrations
+description: Connect Axiom Layer to your identity providers, MDM platforms, cloud infrastructure, financial tools, and more.
+---
+
+Axiom Layer integrates with over 60 tools across your IT stack. Each integration uses read-only API access to discover assets, track usage, and surface spend data.
+
+## Connection methods
+
+Integrations connect through one of two methods:
+
+- **OAuth** -- authorize directly through the provider's login flow (for example, Google Workspace)
+- **Manual** -- provide API credentials such as tokens, client IDs, or domain URLs
+
+To connect an integration, go to **Settings** in the dashboard and select the provider.
+
+## Supported integrations
+
+### User management and IAM
+
+| Provider | Connection | Description |
+|---|---|---|
+| Okta | Manual | SSO, MFA policies, user provisioning logs |
+| OneLogin | Manual | SSO app grants, user assignments, MFA policy posture |
+| Google Workspace | OAuth | Users, 2FA status, admin audit logs, Drive sharing |
+| Microsoft Entra ID | Manual | Azure AD users, groups, app registrations, sign-in logs |
+| JumpCloud | Manual | Directory users, devices, SSO app assignments |
+
+### HRIS
+
+| Provider | Connection | Description |
+|---|---|---|
+| BambooHR | Manual | Employee directory with start/end dates and department data |
+| Deel | Manual | Contractor and EOR data across jurisdictions |
+| Gusto | Manual | Employee roster, start/end dates, benefits enrollment |
+| HiBob | Manual | Employee directory, custom fields, time-off data |
+| Rippling | Manual | Unified HR, IT, and payroll employee data |
+| Workday | Manual | Enterprise HR data with org structure and job profiles |
+
+### Device management (MDM)
+
+| Provider | Connection | Description |
+|---|---|---|
+| Jamf Pro | Manual | macOS and iOS device inventory, OS versions, encryption status |
+| Microsoft Intune | Manual | Windows and mobile device compliance, configuration profiles |
+| Kandji | Manual | Apple device management with blueprint status |
+| JumpCloud | Manual | Cross-platform device management and directory |
+| level.io | Manual | Endpoint monitoring with real-time device health |
+| Mosyle | Manual | Apple device management for education and business |
+
+### Cloud infrastructure
+
+| Provider | Connection | Description |
+|---|---|---|
+| AWS | Manual | IAM users, EC2 instances, cost and usage data |
+| Google Cloud | Manual | Projects, IAM, compute instances, billing data |
+| Azure | Manual | Subscriptions, resource groups, cost management |
+| Cloudflare | Manual | Domains, DNS, WAF rules, and access policies |
+
+### Financial and procurement
+
+| Provider | Connection | Description |
+|---|---|---|
+| QuickBooks | Manual | Vendor payments and expense categorization |
+| Brex | OAuth | Corporate card transactions and vendor spend |
+| Ramp | Manual | Card transactions with automatic vendor matching |
+| Expensify | Manual | Expense reports and receipt data |
+| Xero | Manual | Accounts payable and vendor payment history |
+| Coupa | Manual | Procurement orders and invoice management |
+| SAP Concur | Manual | Travel and expense management data |
+| Stripe | Manual | Subscription billing and payment data |
+
+### Security and compliance
+
+| Provider | Connection | Description |
+|---|---|---|
+| CrowdStrike | Manual | Endpoint protection status and threat data |
+| SentinelOne | Manual | Endpoint detection and response status |
+| 1Password | Manual | Vault usage, team member access, security events |
+| Bitwarden | Manual | Password manager usage and policy compliance |
+| Duo Security | Manual | MFA enrollment status and authentication logs |
+| Wiz | Manual | Cloud security posture and vulnerability data |
+| Snyk | Manual | Application security and dependency vulnerabilities |
+| Datadog | Manual | Infrastructure monitoring and APM data |
+
+### Communication and collaboration
+
+| Provider | Connection | Description |
+|---|---|---|
+| Slack | Manual | Workspace users, channels, app installations |
+| Microsoft Teams | Manual | Team membership, channel activity, app usage |
+| Confluence | Manual | Spaces, pages, and user activity |
+| Notion | Manual | Workspace members and page access |
+| Zoom | Manual | Meeting usage, license assignments, recording data |
+| Asana | Manual | Workspace membership and project activity |
+
+### ITSM
+
+| Provider | Connection | Description |
+|---|---|---|
+| Jira | Manual | Projects, issues, and user assignments |
+| Linear | Manual | Workspace members, teams, and project data |
+| ServiceNow | Manual | CMDB assets, incidents, and change management |
+| Freshservice | Manual | IT asset management and service desk data |
+| Zendesk | Manual | Support tickets and agent activity |
+
+## Sync behavior
+
+After you connect an integration, Axiom Layer runs an initial sync to pull your current data. Ongoing syncs run continuously so that new apps, devices, and licenses appear in your dashboard as they are detected.
+
+<Note>All integrations use read-only access. Axiom Layer never creates, modifies, or deletes data in your connected tools.</Note>
+
+## Browser extension
+
+In addition to API-based integrations, Axiom Layer offers a Chrome browser extension for in-browser SaaS detection. The extension identifies applications your team uses by observing browser activity, without requiring admin-level API access to each tool.

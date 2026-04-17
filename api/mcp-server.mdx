@@ -1,0 +1,109 @@
+---
+title: MCP server
+description: Query your Axiom Layer asset inventory from AI assistants using the Model Context Protocol.
+---
+
+Axiom Layer exposes an MCP-compatible server that lets AI assistants (such as Claude, Cursor, or custom agents) read your organization's asset data using natural language.
+
+The server implements the [Model Context Protocol](https://modelcontextprotocol.io/) over JSON-RPC 2.0 via HTTP.
+
+## Endpoint
+
+```
+POST https://axiomlayer.com/api/mcp
+```
+
+The server requires authentication through a valid session. A `GET` request to the same endpoint returns server metadata.
+
+## Available tools
+
+The MCP server exposes four tools:
+
+### `axiomlayer_list_assets`
+
+List assets in your organization's inventory.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|---|---|---|
+| `limit` | number | Maximum results to return (1--200, default 50) |
+| `status` | string | Filter by asset status |
+| `search` | string | Case-insensitive search by name or canonical ID |
+
+### `drift_list_apps`
+
+List discovered applications from Axiom Drift.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|---|---|---|
+| `limit` | number | Maximum results to return (1--200, default 50) |
+| `status` | string | Filter by app status (`managed`, `shadow_it`, etc.) |
+| `search` | string | Case-insensitive search by app name |
+
+### `codex_list_controls`
+
+List compliance controls from Axiom Codex.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|---|---|---|
+| `limit` | number | Maximum results to return (1--200, default 50) |
+| `status` | string | Filter by control status |
+| `search` | string | Case-insensitive search by control code or title |
+
+### `platform_get_overview`
+
+Return summary counts across all Axiom products. No parameters required.
+
+**Example response:**
+
+```json
+{
+  "assets": 142,
+  "drift_apps": 87,
+  "codex_controls": 64
+}
+```
+
+## Usage example
+
+Send a JSON-RPC 2.0 request to initialize the connection, then call tools:
+
+```bash
+# Initialize the connection
+curl -X POST https://axiomlayer.com/api/mcp \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "initialize"
+  }'
+
+# List assets
+curl -X POST https://axiomlayer.com/api/mcp \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 2,
+    "method": "tools/call",
+    "params": {
+      "name": "axiomlayer_list_assets",
+      "arguments": {
+        "limit": 10,
+        "search": "slack"
+      }
+    }
+  }'
+```
+
+## Supported methods
+
+| Method | Description |
+|---|---|
+| `initialize` | Initialize the MCP connection and receive server capabilities |
+| `tools/list` | List all available tools and their input schemas |
+| `tools/call` | Execute a tool with the specified parameters |

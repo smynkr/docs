@@ -1,0 +1,63 @@
+---
+title: Spend management
+description: Track SaaS spend across vendors, departments, and categories. Identify unused licenses, redundant tools, and optimization opportunities.
+---
+
+Axiom Layer aggregates spend data from financial integrations, contract uploads, and email receipts to give you a unified view of your SaaS costs.
+
+## Spend sources
+
+Axiom Layer collects spend data from multiple sources:
+
+| Source | How it works |
+|---|---|
+| Corporate cards | Transactions from Brex, Ramp, and other financial integrations are automatically matched to vendors |
+| Email receipts | Invoice and receipt emails are parsed from Gmail and Microsoft 365 Mail |
+| Contracts | Uploaded contracts with AI-extracted pricing data |
+| Manual entry | Manually added spend records for tools not covered by integrations |
+
+## Dashboard
+
+The spend dashboard at **Spend** in the sidebar shows:
+
+- **Total spend** by month, quarter, or year
+- **Spend by vendor** with trends over time
+- **Spend by category** (productivity, security, infrastructure, etc.)
+- **Per-app detail** pages with historical spend and license counts
+
+## License optimization
+
+Axiom Layer identifies opportunities to reduce spend:
+
+- **Unused licenses** -- licenses assigned to employees who haven't used the tool within a configurable period
+- **Redundant tools** -- AI-powered detection of overlapping tools (for example, multiple project management or password manager subscriptions)
+- **License harvesting** -- recommendations to reclaim unused seats before the next renewal
+
+The license review queue at **Licenses** > **Review queue** surfaces actionable recommendations with estimated savings.
+
+## Budgets
+
+Set budgets to track spend against targets:
+
+<Steps>
+  <Step title="Create a budget">
+    Go to **Spend** > **Budgets** and select **Add budget**. Choose a scope (category, department, or specific app) and set a monthly or annual limit.
+  </Step>
+  <Step title="Monitor progress">
+    The budgets page shows current spend against each budget with visual progress indicators. Budgets that exceed their threshold are flagged.
+  </Step>
+</Steps>
+
+## Virtual cards
+
+If you use Stripe Issuing, Axiom Layer can issue per-vendor virtual cards that enforce spend policies at the point of purchase. Virtual cards are managed from **Spend** > **Virtual cards**.
+
+Each card is scoped to a specific vendor and includes:
+
+- **Spend limits** per transaction or per month
+- **Automatic approval** or manual review workflows
+- **Real-time transaction tracking** in the spend dashboard
+
+## Benchmarking
+
+The **Benchmarks** page compares your spend against aggregated, anonymized data from similar organizations. You can see how your per-employee costs for common tools compare to industry medians and identify areas where you may be overpaying.
