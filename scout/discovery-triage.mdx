@@ -64,8 +64,34 @@ Every Monday at 09:00 UTC, Scout generates a markdown digest summarizing the dis
 - Total counts of pending, auto-rejected, promoted, review, and unclassified rows
 - A table of the top 10 promote candidates ranked by relevance score
 - A table of the top 5 review items needing human attention
+- An inline data sample for each Socrata dataset so you can evaluate it without leaving your inbox
 
 The digest is stored in the `scout_discovery_digests` table, keyed by the Monday date of that week. Generating the same week twice overwrites the previous digest.
+
+### Inline data samples
+
+Each promote and review item in the digest includes a live preview of the underlying dataset. For Socrata sources, Scout fetches a 2-row sample directly from the API endpoint stored in the source record and renders it as a table in the email body.
+
+The preview shows:
+
+- Up to **5 columns** of actual data from the first 2 rows
+- **Row count** and **column count** for the full dataset
+- A direct link to the raw **JSON endpoint**
+
+This lets you decide whether a dataset is worth standing up as a collection pipeline without opening a browser or querying the catalog manually.
+
+<Note>
+  Data samples are fetched live at digest generation time. If a Socrata endpoint is unreachable or slow (over 6 seconds), the digest row renders without a preview instead of failing the entire digest. Non-Socrata sources (data.gov, ArcGIS Hub) do not include previews.
+</Note>
+
+You can tune the preview behavior with these environment variables on the Scout service:
+
+| Variable | Default | Description |
+|---|---|---|
+| `SAMPLE_ROWS` | `2` | Number of rows to fetch per dataset |
+| `PREVIEW_COLUMNS` | `5` | Maximum columns shown in the sample table |
+| `PREVIEW_TIMEOUT` | `6` | Seconds before a preview fetch is abandoned |
+| `PREVIEW_CELL_CHARS` | `80` | Maximum characters per cell value before truncation |
 
 ### Email delivery
 
@@ -76,7 +102,7 @@ Scout sends the weekly digest as a formatted HTML email. Configure the recipient
 SCOUT_DIGEST_EMAIL=your-team@example.com
 ```
 
-The email includes backlog counts, a table of the top promote candidates, and items needing review.
+The email includes backlog counts, a table of the top promote and review candidates, and inline data samples for each Socrata dataset.
 
 ## Acting on triage results
 
