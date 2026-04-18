@@ -67,16 +67,16 @@ Every Monday at 09:00 UTC, Scout generates a markdown digest summarizing the dis
 
 The digest is stored in the `scout_discovery_digests` table, keyed by the Monday date of that week. Generating the same week twice overwrites the previous digest.
 
-### Slack notifications
+### Email delivery
 
-If you set the `SCOUT_SLACK_WEBHOOK_URL` environment variable, Scout also posts a summary of each digest to your Slack channel.
+Scout sends the weekly digest as a formatted HTML email. Configure the recipient address with the `SCOUT_DIGEST_EMAIL` environment variable on the Scout service:
 
 ```bash
-# Optional: post weekly digest to Slack
-SCOUT_SLACK_WEBHOOK_URL=<your-slack-webhook-url>
+# Email address for weekly digest delivery
+SCOUT_DIGEST_EMAIL=your-team@example.com
 ```
 
-The Slack message includes the backlog counts and a formatted preview of the full digest.
+The email includes backlog counts, a table of the top promote candidates, and items needing review.
 
 ## Acting on triage results
 
