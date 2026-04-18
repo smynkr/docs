@@ -69,14 +69,24 @@ The digest is stored in the `scout_discovery_digests` table, keyed by the Monday
 
 ### Email delivery
 
-Scout sends the weekly digest as a formatted HTML email. Configure the recipient address with the `SCOUT_DIGEST_EMAIL` environment variable on the Scout service:
+Scout can send the weekly digest as a formatted HTML email via [Resend](https://resend.com). To enable email delivery, set both environment variables on the Scout service:
 
 ```bash
-# Email address for weekly digest delivery
+# Required — Resend API key and recipient address
+RESEND_API_KEY=re_xxxxxxxx
 SCOUT_DIGEST_EMAIL=your-team@example.com
+
+# Optional — customize the sender (default shown)
+SCOUT_DIGEST_FROM="Axiom Locus <alerts@axiomlocus.io>"
 ```
 
-The email includes backlog counts, a table of the top promote candidates, and items needing review.
+When both `RESEND_API_KEY` and `SCOUT_DIGEST_EMAIL` are set, Scout emails the digest every Monday after generation. The email includes backlog counts, a table of the top promote candidates, and items needing human review.
+
+<Info>
+  If email is not configured, the digest is still generated and stored in the `scout_discovery_digests` table every week. You can query it directly or configure email delivery later.
+</Info>
+
+The email subject line includes counts so you can scan your inbox at a glance — for example: `Scout Digest 2026-04-14 — 5 promote, 3 review, 89 pending`.
 
 ## Acting on triage results
 
