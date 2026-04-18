@@ -1,0 +1,120 @@
+---
+title: "Discovery triage"
+description: "How Scout automatically discovers, classifies, and surfaces new civic data sources for review."
+---
+
+Scout continuously scans public data catalogs for new civic datasets relevant to real-estate intelligence. When it finds new sources, an LLM-based triage system classifies them and a weekly digest surfaces the best candidates for human review.
+
+## How discovery works
+
+Scout searches three catalog APIs on a rotating schedule:
+
+| Catalog | Frequency | What it scans |
+|---|---|---|
+| Socrata | Weekly | 25+ city and county open data portals |
+| data.gov (CKAN) | Bi-weekly | Federal catalog filtered to municipal datasets |
+| ArcGIS Hub | Bi-weekly | Government GIS feature services |
+
+Each discovered dataset is scored on a 0-10 relevance scale based on:
+
+- **High-value keywords** in the name and description (permits, zoning, enforcement, assessments, etc.)
+- **Location fields** that enable spatial indexing (latitude/longitude, geometry columns)
+- **Date fields** that support incremental collection
+
+Datasets scoring above the relevance threshold are stored in the discovery backlog as `pending`.
+
+## Auto-dedup rejection
+
+Before LLM triage runs, Scout automatically rejects discovered sources that overlap with collectors you already have configured. For example, if Scout finds a "Building Permits" dataset from a city where you already collect permits, it marks the row as `rejected` and notes which existing collector matched.
+
+This prevents duplicate collection pipelines. To add the new dataset to an existing collector, update that collector's configuration with the new `dataset_id` instead of promoting it as a separate source.
+
+## LLM triage
+
+Every 4 hours, the triage module pulls up to 20 unclassified pending rows and asks a local LLM to classify each one.
+
+### Verdicts
+
+Each dataset receives one of three verdicts:
+
+- **promote** -- High-signal for real-estate siting decisions. The dataset covers permits, zoning, code enforcement, tax data, business licenses, crime, 311, transit, or similar domains, and is clearly nontrivial.
+- **reject** -- Low-signal (pet licenses, food trucks, narrow admin artifacts), archival snapshots that do not update, or obvious overlap with an existing collector.
+- **review** -- Ambiguous cases that need a human decision.
+
+The verdict and a one-line reason are written back to the discovery row along with a timestamp.
+
+### Configuration
+
+LLM triage uses a local Ollama instance. Configure these environment variables on the Scout service:
+
+```bash
+# Ollama connection (defaults shown)
+OLLAMA_BASE_URL=http://100.94.177.111:11434
+OLLAMA_MODEL=qwen3.6:35b-a3b
+```
+
+<Warning>
+  Triage requires a reachable Ollama instance. If Ollama is unavailable, the triage loop errors out and retries on the next 4-hour tick. There is no cloud LLM fallback.
+</Warning>
+
+## Weekly digest
+
+Every Monday at 09:00 UTC, Scout generates a markdown digest summarizing the discovery backlog. The digest includes:
+
+- Total counts of pending, auto-rejected, promoted, review, and unclassified rows
+- A table of the top 10 promote candidates ranked by relevance score
+- A table of the top 5 review items needing human attention
+
+The digest is stored in the `scout_discovery_digests` table, keyed by the Monday date of that week. Generating the same week twice overwrites the previous digest.
+
+### Slack notifications
+
+If you set the `SCOUT_SLACK_WEBHOOK_URL` environment variable, Scout also posts a summary of each digest to your Slack channel.
+
+```bash
+# Optional: post weekly digest to Slack
+SCOUT_SLACK_WEBHOOK_URL=<your-slack-webhook-url>
+```
+
+The Slack message includes the backlog counts and a formatted preview of the full digest.
+
+## Acting on triage results
+
+To promote a discovered source into active collection:
+
+<Steps>
+  <Step title="Review the digest or query the backlog">
+    Check your weekly digest or query `scout_discovered_sources` for rows where `llm_verdict = 'promote'` and `status = 'pending'`.
+  </Step>
+  <Step title="Update the source status">
+    Set `status` to `'promoted'` on the row you want to activate.
+  </Step>
+  <Step title="Add the dataset to a collector">
+    Add the `dataset_id` from the discovered source to the matching collector's configuration. This connects the new dataset to your existing collection schedule.
+  </Step>
+</Steps>
+
+## Scout run modes
+
+You can run the Scout agent in different modes using the `SCOUT_MODE` environment variable:
+
+| Mode | Behavior |
+|---|---|
+| `forever` (default) | Runs continuously with parallel workers, executing collection, discovery, triage, and digest on schedule |
+| `once` | Runs all due sources once and exits |
+| `discover` | Runs only the discovery scan and exits |
+
+```bash
+# Run a single discovery pass
+SCOUT_MODE=discover groundswell scout
+```
+
+### Parallel workers
+
+In `forever` mode, Scout runs up to 4 collection tasks concurrently by default. You can adjust this with:
+
+```bash
+SCOUT_WORKERS=8
+```
+
+Sources that fail 3 times consecutively are backed off for 6 hours before retrying.
