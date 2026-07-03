@@ -1,97 +1,55 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: Introduction
+description: Axiom Layer is a unified IT asset management platform that discovers SaaS subscriptions, hardware devices, and software licenses across your organization.
 ---
 
-## Setting up
+Axiom Layer connects to your identity provider, MDM, email, and financial systems to build a complete IT inventory automatically. You get spend visibility, renewal tracking, and compliance readiness without spreadsheets or manual data entry.
 
-Get your documentation site up and running in minutes.
+## Key capabilities
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Asset discovery" icon="magnifying-glass" href="/quickstart">
+    Automatically discover SaaS apps, hardware devices, and software licenses across your organization through 60+ integrations.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Spend management" icon="dollar-sign" href="/features/spend-management">
+    Track SaaS spend by vendor, department, and category. Identify redundant tools, unused licenses, and optimization opportunities.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Renewals and contracts" icon="calendar" href="/features/renewals-and-contracts">
+    Upload contracts for AI extraction of renewal dates and pricing. Receive alerts at 60, 30, and 7 days before renewals.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Integrations" icon="plug" href="/features/integrations">
+    Connect to identity providers, MDM platforms, cloud infrastructure, HRIS, financial tools, and more.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## How it works
 
-Everything you need to create world-class documentation.
+<Steps>
+  <Step title="Connect your tools">
+    Link your identity provider, MDM, and email systems. Axiom Layer uses read-only API access and never modifies your data.
+  </Step>
+  <Step title="Automatic discovery">
+    The multi-source discovery engine finds every SaaS app, device, and license across SSO logs, OAuth grants, billing emails, and MDM data.
+  </Step>
+  <Step title="See the full picture">
+    Your dashboard shows spend, renewals, compliance gaps, and shadow IT, updated continuously.
+  </Step>
+</Steps>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Developer tools
 
-## Need inspiration?
+<CardGroup cols={2}>
+  <Card title="API authentication" icon="key" href="/api/authentication">
+    Authenticate with API keys to access Axiom Layer data programmatically.
+  </Card>
+  <Card title="MCP server" icon="robot" href="/api/mcp-server">
+    Query your asset inventory from AI assistants using the Model Context Protocol.
+  </Card>
+</CardGroup>
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+## The Axiom platform
+
+Axiom Layer is the foundation of the Axiom platform. It feeds asset and vendor data into companion products:
+
+- **Axiom Drift** -- SaaS discovery and shadow IT detection
+- **Axiom Codex** -- compliance automation and control management

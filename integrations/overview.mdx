@@ -1,0 +1,43 @@
+---
+title: Integrations overview
+description: Connect your identity providers, device managers, and other tools to Axiom Layer for automatic SaaS discovery and management.
+---
+
+Axiom Layer integrates with your existing tools to build a complete picture of your SaaS environment. Integrations pull in user directories, device inventories, expense data, and more -- so you can track every app, license, and identity from one dashboard.
+
+## How integrations work
+
+When you connect an integration, Axiom Layer syncs data from the source into your unified asset graph. The first sync runs automatically after connection, and you can trigger additional syncs at any time.
+
+Each integration falls into one of these categories:
+
+| Category | Examples | What it syncs |
+| --- | --- | --- |
+| User management and IAM | Google Workspace, Microsoft Entra ID, Okta | Users, groups, SSO apps, audit logs |
+| Device management | Jamf, Kandji, Intune | Devices, compliance status, installed apps |
+| HRIS | BambooHR, Gusto, Rippling | Employee records, departments, onboarding/offboarding |
+| Finance and expense | Brex, Ramp, QuickBooks | Transactions, vendor spend, receipt data |
+| Development | GitHub, GitLab, Jira | Repos, projects, seat usage |
+| Collaboration | Slack, Zoom, Notion | Workspace members, usage data |
+
+## Connection methods
+
+Axiom Layer supports two ways to connect integrations:
+
+- **OAuth (one-click)** -- Sign in with your provider account and grant consent. No credentials to copy or configure. Available for [Google Workspace](/integrations/google-workspace) and [Microsoft Entra ID](/integrations/microsoft-entra-id).
+- **API credentials** -- Enter an API key, token, or client ID/secret pair. Used for connectors that don't yet support OAuth.
+
+## Connect an integration
+
+1. Go to **Integrations** in the sidebar.
+2. Find the connector you want and click **Connect**.
+3. Follow the prompts -- either sign in via OAuth or enter API credentials.
+4. After connecting, the first sync starts automatically. Refresh in a few minutes to see your data.
+
+## Managing connections
+
+From the **Integrations** page you can:
+
+- **Sync now** -- Trigger a manual data sync at any time.
+- **Disconnect** -- Remove a connection and stop syncing data from that source.
+- **View status** -- See whether a connection is active, needs re-authentication, or is failing.
