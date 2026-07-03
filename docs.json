@@ -33,6 +33,14 @@
             "pages": [
               "scout/discovery-triage"
             ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/overview",
+              "integrations/google-workspace",
+              "integrations/microsoft-entra-id"
+            ]
           }
         ]
       },
