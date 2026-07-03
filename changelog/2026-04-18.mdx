@@ -1,0 +1,41 @@
+---
+title: "Changelog — April 18, 2026"
+description: "Cell list view, Scout auto-triage and weekly digests, expanded Discover filters with CSV export, flood risk scoring, and more."
+---
+
+<Update label="2026-04-18" description="Week of April 14–18" tags={["Feature", "Update", "Fix"]}>
+
+## New features
+
+**Cell list view** — You can now browse scored H3 cells in a filterable table view. Filter by metro, tier (pipeline, safety, vitality, pioneer), direction, renter percentage, and permit ranges, then sort by any column. A new "Cell list" button on the Intelligence Dashboard links directly to this view.
+
+**Expanded Discover filters and CSV export** — The Discover page now supports multi-metro selection, composite score range (min and max), and new signal-group sliders for development pipeline, population momentum, amenity demand, and confidence threshold. You can sort results by any signal group and export the current result set as CSV.
+
+**Cell detail improvements** — The cell detail panel now shows score history with 30-day and 90-day deltas, rent burden data from the American Community Survey, sparkline annotations for high-signal events (permits, OSHA violations, EPA violations, crime reports), notable events with distance and type, and real POI data grouped by category.
+
+**Scout auto-triage** — Newly discovered data sources are now automatically classified as promote, reject, or review. This clears the discovery backlog so promising sources surface faster without manual sorting.
+
+**Scout weekly digest** — A weekly summary of the discovery backlog is generated every Monday, including the top promote candidates and items needing review. If Slack is connected, the digest posts to your channel automatically.
+
+**FEMA flood exposure scoring** — Flood risk is now factored into safety scores. The system aggregates NFIP claims data by ZIP code to produce a flood exposure score, filling the largest known gap in the safety scoring model.
+
+**311 complaint sentiment signals** — 311 complaint narratives are now ingested and aggregated at the H3 cell level with density and year-over-year trends. A rule-based sentiment score helps surface neighborhoods with rising complaint volumes. Boston is now covered as a new metro.
+
+**Civic upzoning signals** — Council documents are now scored for upzoning probability and litigation risk. Cells near areas with high upzoning probability receive a valuation boost, while elevated litigation risk is factored into pioneer density calculations.
+
+## Updates
+
+**Dashboard portfolio redesign** — The dashboard has been rebuilt as a portfolio intelligence hub with monitor cards, an alert inbox, MetroPulse cards, and score badges.
+
+**OSHA data source rewrite** — The OSHA workplace safety data feed now uses the ITA 300A bulk dataset, replacing the retired enforcedata.dol.gov API. Data collection continues uninterrupted.
+
+**Score maintenance risk** — The score maintenance risk endpoint is now fully functional, providing risk assessments that were previously unavailable.
+
+**Wider council monitoring window** — The Legistar council monitor now uses a 14-day rolling window (up from 3 days), so development decisions that move through multi-week meeting cycles are reliably captured.
+
+## Bug fixes
+
+- Fixed nightly backfill jobs that were failing silently due to referencing nonexistent database columns, preventing legacy records from being indexed.
+- Fixed the council monitor missing development decisions because it was filtering on introduction date instead of last-modified date.
+
+</Update>

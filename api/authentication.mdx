@@ -1,0 +1,51 @@
+---
+title: API authentication
+description: Authenticate requests to the Axiom Layer API using API keys with scoped permissions.
+---
+
+The Axiom Layer API uses bearer token authentication with API keys. Each key is scoped to an organization and can be assigned specific permission levels.
+
+## Create an API key
+
+Generate API keys from **Settings** in the dashboard. Each key has a name, one or more scopes, and an optional expiration date.
+
+API keys use the prefix `axm_live_` followed by a unique token. The full key is shown only once at creation time. Store it securely.
+
+## Authentication
+
+Include your API key in the `Authorization` header of every request:
+
+```bash
+curl -H "Authorization: Bearer axm_live_your_key_here" \
+  https://axiomlayer.com/api/assets
+```
+
+## Scopes
+
+API keys support three permission levels, each granting access to all lower levels:
+
+| Scope | Description |
+|---|---|
+| `read` | Read access to assets, apps, contracts, and spend data |
+| `write` | Create and update records (includes `read`) |
+| `admin` | Full access including key management and settings (includes `write`) |
+
+## Rate limits
+
+API requests are rate-limited to **100 requests per minute** per organization. Rate limit status is returned in response headers:
+
+| Header | Description |
+|---|---|
+| `X-RateLimit-Remaining` | Requests remaining in the current window |
+| `X-RateLimit-Reset` | Unix timestamp when the limit resets |
+| `Retry-After` | Seconds to wait before retrying (only on 429 responses) |
+
+When you exceed the limit, the API returns a `429 Too Many Requests` response. Wait for the duration specified in the `Retry-After` header before retrying.
+
+## Error responses
+
+| Status | Meaning |
+|---|---|
+| `401 Unauthorized` | Missing, invalid, expired, or revoked API key |
+| `403 Forbidden` | API key lacks the required scope for this endpoint |
+| `429 Too Many Requests` | Rate limit exceeded |
